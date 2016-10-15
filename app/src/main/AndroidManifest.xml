@@ -15,6 +15,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".QuestionListActivity"
+            android:label="@string/title_activity_question_list"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".WeightListActivity"
+            android:label="@string/title_activity_weight_list"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
