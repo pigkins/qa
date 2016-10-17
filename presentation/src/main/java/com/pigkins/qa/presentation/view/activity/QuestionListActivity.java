@@ -10,27 +10,44 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 
 import com.pigkins.qa.R;
+import com.pigkins.qa.presentation.internal.di.HasComponent;
+import com.pigkins.qa.presentation.internal.di.components.DaggerQuestionComponent;
+import com.pigkins.qa.presentation.internal.di.components.QuestionComponent;
+import com.pigkins.qa.presentation.model.QuestionModel;
+import com.pigkins.qa.presentation.view.fragment.QuestionListFragment;
 
-public class QuestionListActivity extends BaseActivity {
+public class QuestionListActivity extends BaseActivity implements HasComponent<QuestionComponent>, QuestionListFragment.QuestionListListener {
 
     public static Intent getCallingIntent(Context context) {
         return new Intent(context, QuestionListActivity.class);
     }
 
+    private QuestionComponent questionComponent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question_list);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        this.initializeInjector();
+        if (savedInstanceState == null) {
+            addFragment(R.id.fragmentContainer, new QuestionListFragment());
+        }
+    }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+    private void initializeInjector() {
+        this.questionComponent = DaggerQuestionComponent.builder()
+                .applicationComponent(getApplicationComponent())
+                .activityModule(getActivityModule())
+                .build();
+    }
+
+    @Override
+    public QuestionComponent getComponent() {
+        return questionComponent;
+    }
+
+    @Override
+    public void onQuestionClicked(QuestionModel questionModel) {
+
     }
 }
