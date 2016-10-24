@@ -2,6 +2,7 @@ package com.pigkins.qa.presentation.view.adapter;
 
 import android.content.Context;
 import android.support.v7.view.CollapsibleActionView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -50,7 +51,7 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
     public void onBindViewHolder(QuestionListAdapter.QuestionViewHolder holder, int position) {
         final QuestionModel questionModel = this.questionCollection.get(position);
         holder.textViewQuestion.setText(questionModel.getQuestion());
-        holder.textViewDate.setText(questionModel.getDate().toString());
+        holder.textViewDate.setText(questionModel.getMonth()+" "+questionModel.getDay());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 if (QuestionListAdapter.this.onItemClickListener != null) {
@@ -66,8 +67,8 @@ public class QuestionListAdapter extends RecyclerView.Adapter<QuestionListAdapte
     }
 
     static class QuestionViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.question) TextView textViewQuestion;
-        @BindView(R.id.date) TextView textViewDate;
+        @BindView(R.id.card_question) TextView textViewQuestion;
+        @BindView(R.id.card_date) TextView textViewDate;
 
         public QuestionViewHolder(View itemView) {
             super(itemView);

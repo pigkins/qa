@@ -77,7 +77,7 @@ public class QuestionListFragment extends BaseFragment implements QuestionListVi
         super.onViewCreated(view, savedInstanceState);
         this.questionListPresenter.setView(this);
         if (savedInstanceState == null) {
-                this.questionListPresenter.initialize();
+                this.questionListPresenter.initialize(this.getActivity().getApplicationContext());
         }
     }
 

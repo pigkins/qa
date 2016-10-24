@@ -8,21 +8,27 @@ import java.util.Date;
 public class QuestionModel {
     private final int questionId;
 
-    public QuestionModel(int questionId, Date date, String question) {
+    public QuestionModel(int questionId, String month, String day, String question) {
         this.questionId = questionId;
-        this.date = date;
+        this.month = month;
+        this.day = day;
         this.question = question;
     }
 
     private String question;
-    private Date date;
+    private String month;
+    private String day;
 
     public int getQuestionId() {
         return questionId;
     }
 
-    public Date getDate() {
-        return date;
+    public String getDay() {
+        return day;
+    }
+
+    public String getMonth() {
+        return month;
     }
 
     public String getQuestion() {
@@ -34,7 +40,7 @@ public class QuestionModel {
 
         stringBuilder.append("***** Question Model Details *****\n");
         stringBuilder.append("id=" + this.getQuestionId() + "\n");
-        stringBuilder.append("date=" + this.getDate().toString() + "\n");
+        stringBuilder.append("date=" + this.getMonth() + " " + this.getDay() + "\n");
         stringBuilder.append("question=" + this.getQuestion() + "\n");
         stringBuilder.append("*******************************");
 

@@ -1,10 +1,18 @@
 package com.pigkins.qa.presentation.presenter;
 
+import android.content.Context;
+import android.renderscript.ScriptGroup;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.pigkins.qa.R;
 import com.pigkins.qa.presentation.model.QuestionModel;
 import com.pigkins.qa.presentation.view.QuestionListView;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -45,15 +53,25 @@ public class QuestionListPresenter implements Presenter {
         this.questionListView.viewQuestion(questionModel);
     }
 
-    public void initialize() {
+    public void initialize(Context context) {
         // fake data
-        final Collection<QuestionModel> questionModelCollection =
+        Collection<QuestionModel> questionModelCollection =
                 new ArrayList<>();
-        for (int i = 1; i < 31; i++) {
-            questionModelCollection.add(new QuestionModel(i, new Date(2016, 1, i), "asfsf"));
-        }
-        for (int i = 1; i < 28; i++) {
-            questionModelCollection.add(new QuestionModel(i, new Date(2016, 2, i), "asfsafsf"));
+
+        try {
+            InputStream inputStream = context.getResources().openRawResource(R.raw.questions);
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            int count = 0;
+            String line;
+            while ((line = bufferedReader.readLine()) != null) {
+                Log.d(this.getClass().getName(), "line = "+line);
+                String[] tokens = line.split("\\|");
+                Log.d(this.getClass().getName(), "tokens = " + tokens.length);
+                questionModelCollection.add(new QuestionModel(++count, tokens[0], tokens[1], tokens[2]));
+
+            }
+        } catch (IOException e) {
+
         }
         questionListView.renderQuestionList(questionModelCollection);
     }
